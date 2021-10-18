@@ -1,0 +1,587 @@
+<template>
+    <div id="app" class="s-layout">
+      <main class="s-layout__content">
+        <h1>Full View, Please!</h1>
+      </main>
+  
+      <div class="s-layout__sidebar">
+        <a class="s-sidebar__trigger" href="#0">
+          <i class="fa fa-bars"></i>
+        </a>
+  
+        <!-- actual side bar -->
+        <nav class="s-sidebar__nav">
+          <ul>
+            <li>
+              <!-- <a class="s-sidebar__nav-link" href="#0">
+                <i class="fa fa-home"></i><em>Home</em>
+              </a> -->
+              <MultiSelect
+                v-model="selectedSource"
+                :options="Source"
+                placeholder="Select Source"
+                display="chip"
+              />
+            </li>
+            <br />
+            <li>
+              <!-- <a class="s-sidebar__nav-link" href="#0">
+                <i class="fa fa-home"></i><em>Home</em>
+              </a> -->
+              <MultiSelect
+                v-model="selectedCampaign"
+                :options="Campaign"
+                placeholder="Select Campaign"
+              />
+            </li>
+            <br />
+            <li>
+              <!-- <a class="s-sidebar__nav-link" href="#0">
+                <i class="fa fa-home"></i><em>Home</em>
+              </a> -->
+              <MultiSelect
+                v-model="selectedLender"
+                :options="Lender"
+                placeholder="Select a Lender"
+              />
+            </li>
+            <br />
+            <li>
+              <!-- <a class="s-sidebar__nav-link" href="#0">
+                <i class="fa fa-user"></i><em>My Profile</em>
+              </a> -->
+              <MultiSelect
+                v-model="selectedStatus"
+                :options="Status"
+                placeholder="Select a Status"
+              />
+            </li>
+            <br />
+            <li>
+              <!-- <a class="s-sidebar__nav-link" href="#0">
+                <i class="fa fa-user"></i><em>My Profile</em>
+              </a> -->
+              <MultiSelect
+                v-model="selectedState"
+                :options="State"
+                placeholder="Select a State"
+              />
+            </li>
+            <br />
+            <li>
+              <!-- <a class="s-sidebar__nav-link" href="#0">
+                <i class="fa fa-user"></i><em>My Profile</em>
+              </a> -->
+              <MultiSelect
+                v-model="selectedIndustry"
+                :options="Industry"
+                placeholder="Select a Industry"
+              />
+            </li>
+            <br />
+            <li>
+              <!-- <a class="s-sidebar__nav-link" href="#0">
+                <i class="fa fa-camera"></i><em>Camera</em>
+              </a> -->
+              <MultiSelect
+                v-model="selectedPerpertyOwnership"
+                :options="PerpertyOwnership"
+                placeholder="Ownership"
+              />
+            </li>
+            <br />
+            <li>
+              <!-- <a class="s-sidebar__nav-link" href="#0">
+                <i class="fa fa-home"></i><em>Home</em>
+              </a> -->
+              <MultiSelect
+                v-model="selectedContract"
+                :options="ContractType"
+                placeholder="Low Doc v. Full Doc"
+              />
+            </li>
+            <br />
+            <li>
+              <!-- <a class="s-sidebar__nav-link" href="#0">
+                <i class="fa fa-home"></i><em>Home</em>
+              </a> -->
+              <MultiSelect
+                v-model="selectedLoanPurpose"
+                :options="LoanPurpose"
+                placeholder="Loan Purpose"
+              />
+            </li>
+            <br />
+            <li>
+              <!-- <a class="s-sidebar__nav-link" href="#0">
+                <i class="fa fa-home"></i><em>Home</em>
+              </a> -->
+              <h5>Grouped</h5>
+              <MultiSelect
+                v-model="selectedGroupedProduct"
+                :options="groupedProductType"
+                optionLabel="label"
+                optionGroupLabel="label"
+                optionGroupChildren="items"
+                placeholder="(G)Product Type"
+              >
+                <template #optiongroup="slotProps">
+                  <div>{{ slotProps.option.label }}</div>
+                </template>
+              </MultiSelect>
+            </li>
+            <br />
+            <li>
+              <!-- <a class="s-sidebar__nav-link" href="#0">
+                <i class="fa fa-home"></i><em>Home</em>
+              </a> -->
+              <MultiSelect
+                v-model="selectedEquipment"
+                :options="AssetTypeEquipment"
+                placeholder="(G)Asset Type for Equipment"
+              />
+            </li>
+            <br />
+            <!-- <div
+        v-for="category of categories"
+        :key="category.key"
+        class="p-field-radiobutton"
+      >
+        <RadioButton
+          :id="category.key"
+          name="category"
+          :value="category"
+          v-model="selectedCategory"
+        />
+        <label :for="category.key">{{ category.name }}</label>
+      </div> -->
+            <li>
+              <!-- <a class="s-sidebar__nav-link" href="#0">
+                <i class="fa fa-home"></i><em>Home</em>
+              </a> -->
+              <h3>Asset Age: {{ assetAge }} years</h3>
+              <Slider v-model="assetAge" />
+            </li>
+            <br />
+            <li>
+              <!-- <a class="s-sidebar__nav-link" href="#0">
+                <i class="fa fa-home"></i><em>Home</em>
+              </a> -->
+              <div class="p-fluid p-grid p-formgrid">
+                <div class="p-field p-col-12 p-md-4">
+                  <div class="p-field p-col-12 p-md-4">
+                    <label for="range">Range</label>
+                    <Calendar
+                      id="range"
+                      v-model="datesRange"
+                      selectionMode="range"
+                      :manualInput="false"
+                      yearRange="2000:2060"
+                    />
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </template>
+  
+  <script>
+  import RadioButton from "primevue/radiobutton";
+  export default {
+    components: { RadioButton },
+    data() {
+      return {
+        //   selectAll: true,
+        datesRange: null,
+        date7: null,
+  
+        assetAge: [0, 100],
+  
+        //contract type
+        selectedContract: null,
+        ContractType: ["Low Doc", "Full Doc", "Both"],
+  
+        //Source
+        selectedSource: null,
+        Source: ["Partners", "App", "UBL"],
+        //Campaign
+        selectedCampaign: null,
+        Campaign: [
+          "BOT",
+          "gir9383",
+          "hom6473",
+          "ler2293",
+          "nq9302",
+          "ler3293",
+          "ler4293",
+          "ler5293",
+          "ler1293",
+          "ler6293",
+          "bingler1"
+        ],
+        //Lender
+        selectedLender: null,
+        Lender: [
+          "Capify Australia",
+          "Lend",
+          "GetCapital",
+          "Spotcap Australia",
+          "Prospa",
+          "Business Fuel",
+          "Max Funding",
+          "OnDeck Australia",
+          "Moula",
+          "Lumi",
+          "Cigno",
+          "Sail",
+          "Beyond Merchant Capital"
+        ],
+        //Status
+        selectedStatus: null,
+        Status: [
+          "Existing - Partner honoured",
+          "Duplicate - All lenders",
+          "No lenders found",
+          "Held for review",
+          "Attempting contact",
+          "Work in progress",
+          "Waiting on client",
+          "Docs requested",
+          "Qualified"
+        ],
+        //State
+        selectedState: null,
+        State: [
+          "ACT",
+          "WA",
+          "VIC",
+          "QLD",
+          "NSW",
+          "SOUTH",
+          "SA",
+          "WANGARA",
+          "TAS"
+        ],
+        //   Industry Type
+        selectedIndustry: null,
+        Industry: [
+          "Arts & Lifestyle",
+          "Health & Fitness Centres, Gyms",
+          "Movie, Film & Video Services",
+          "Parks & Gardens",
+          "Photographic Services",
+          "Radio & TV Services"
+        ],
+        //property ownership
+        selectedPerpertyOwnership: null,
+        PerpertyOwnership: ["Yes, I am a owner", "no, I am not a owner", "both"],
+        //   product type => ub type
+        selectedGroupedProduct: null,
+        SubProductType: [
+          { name: "New York", code: "NY" },
+          { name: "Rome", code: "RM" },
+          { name: "London", code: "LDN" },
+          { name: "Istanbul", code: "IST" },
+          { name: "Paris", code: "PRS" }
+        ],
+        ProductType: [
+          { name: "Australia", code: "AU" },
+          { name: "Brazil", code: "BR" },
+          { name: "China", code: "CN" },
+          { name: "Egypt", code: "EG" },
+          { name: "France", code: "FR" },
+          { name: "Unsecured Loan", code: "DE" },
+          { name: "India", code: "IN" },
+          { name: "Line of Credit", code: "JP" },
+          { name: "Spain", code: "ES" },
+          { name: "Secured Loan", code: "US" }
+        ],
+        groupedProductType: [
+          {
+            label: "Unsecured Loan",
+            code: "DE",
+            items: [
+              { label: "Berlin", value: "Berlin" },
+              { label: "Frankfurt", value: "Frankfurt" },
+              { label: "Hamburg", value: "Hamburg" },
+              { label: "Munich", value: "Munich" }
+            ]
+          },
+          {
+            label: "Secured Loan",
+            code: "US",
+            items: [
+              { label: "Chicago", value: "Chicago" },
+              { label: "Los Angeles", value: "Los Angeles" },
+              { label: "New York", value: "New York" },
+              { label: "San Francisco", value: "San Francisco" }
+            ]
+          },
+          {
+            label: "Line of Credit",
+            code: "JP",
+            items: [
+              { label: "Kyoto", value: "Kyoto" },
+              { label: "Osaka", value: "Osaka" },
+              { label: "Tokyo", value: "Tokyo" },
+              { label: "Yokohama", value: "Yokohama" }
+            ]
+          }
+        ],
+        items: Array.from({ length: 1000 }, (_, i) => ({
+          label: `Item #${i}`,
+          value: i
+        })),
+        //Asset Type for Equipment
+        selectedEquipment: null,
+        AssetTypeEquipment: [
+          "Access Equipment",
+          "Agriculture Equipment",
+          "Agriculture Header",
+          "Aircraft",
+          "Articulated Truck > 12T / Prime Mover",
+          "Asset Refurbishment"
+        ],
+  
+        //loan purpose
+        selectedLoanPurpose: null,
+        LoanPurpose: [
+          "Working Capital",
+          "Inventory",
+          "Vehicles or Equipment",
+          "Renovation",
+          "Unexpected Expenses",
+          "Hiring Staff",
+          "Tax",
+          "Other",
+          "Start a New Business",
+          "Purchase Existing Business",
+          "Expansion",
+          "SMSF Property Purchase"
+        ]
+      };
+    },
+    methods: {
+      onSelectAllChange(event) {
+        this.selectedItems = event.checked
+          ? this.items.map(item => item.value)
+          : [];
+        this.selectAll = event.checked;
+      },
+      onChange(event) {
+        this.selectAll = event.value.length === this.items.length;
+      }
+    },
+    created() {
+      //this.selectedCategory = this.categories[1];
+      //date range
+      let today = new Date();
+      let month = today.getMonth();
+      let year = today.getFullYear();
+      let prevMonth = month === 0 ? 11 : month - 1;
+      let prevYear = prevMonth === 11 ? year - 1 : year;
+      let nextMonth = month === 11 ? 0 : month + 1;
+      let nextYear = nextMonth === 0 ? year + 1 : year;
+      this.minDate = new Date();
+      this.minDate.setMonth(prevMonth);
+      this.minDate.setFullYear(prevYear);
+      this.maxDate = new Date();
+      this.maxDate.setMonth(nextMonth);
+      this.maxDate.setFullYear(nextYear);
+  
+      let invalidDate = new Date();
+      invalidDate.setDate(today.getDate() - 1);
+      this.invalidDates = [today, invalidDate];
+    }
+  };
+  </script>
+  
+  <style>
+  h3 {
+    margin-inline-start: 0.5em;
+  }
+  
+  .p-slider.p-slider-horizontal {
+    margin-inline-start: 1em;
+  }
+  
+  .p-slider {
+    background: black;
+  }
+  
+  .p-multiselect {
+    width: 18rem;
+  }
+  
+  /* Primary Styles */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: sans-serif;
+    font-size: 1em;
+    color: #333;
+  }
+  
+  h1 {
+    font-size: 1.4em;
+  }
+  
+  em {
+    font-style: normal;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  /* Layout */
+  .s-layout {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+  }
+  
+  .s-layout__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }
+  
+  /* Sidebar */
+  /* top-nav bar */
+  .s-sidebar__trigger {
+    z-index: 2;
+    position: fixed;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    height: 4em;
+    background: #f5cece;
+  }
+  
+  .s-sidebar__trigger > i {
+    display: inline-block;
+    margin: 1.5em 0 0 1.5em;
+    color: #f07ab0;
+  }
+  
+  /* actual sidebar */
+  .s-sidebar__nav {
+    position: fixed;
+    top: 0;
+    left: -18em;
+    overflow: hidden;
+    transition: all 0.3s ease-in;
+    width: 18em;
+    height: 100%;
+    background: #e6e6e6;
+    color: rgba(19, 18, 18, 0.7);
+  }
+  
+  .s-sidebar__nav:hover,
+  .s-sidebar__nav:focus,
+  .s-sidebar__trigger:focus + .s-sidebar__nav,
+  .s-sidebar__trigger:hover + .s-sidebar__nav {
+    left: 0;
+  }
+  
+  .s-sidebar__nav ul {
+    position: absolute;
+    top: 4em;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 15em;
+  }
+  
+  .s-sidebar__nav ul li {
+    width: 100%;
+  }
+  
+  /* .s-sidebar__nav-link {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 4em;
+  } */
+  
+  /* .s-sidebar__nav-link em {
+    position: absolute;
+    top: 50%;
+    left: 4em;
+    transform: translateY(-50%);
+  } */
+  
+  /* .s-sidebar__nav-link:hover {
+    background: #0683f7;
+  } */
+  
+  /* .s-sidebar__nav-link > i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 4em;
+    height: 4em;
+  } */
+  
+  /* .s-sidebar__nav-link > i::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  } */
+  
+  /* Mobile First */
+  @media (min-width: 42em) {
+    /* .s-layout__content {
+      margin-left: 4em;
+    } */
+  
+    /* Sidebar */
+    /* .s-sidebar__trigger {
+      width: 4em;
+    } */
+  
+    .s-sidebar__nav {
+      width: 4em;
+      left: 0;
+    }
+  
+    .s-sidebar__nav:hover,
+    .s-sidebar__nav:focus,
+    .s-sidebar__trigger:hover + .s-sidebar__nav,
+    .s-sidebar__trigger:focus + .s-sidebar__nav {
+      width: 18em;
+    }
+  }
+  
+  @media (min-width: 48em) {
+    .s-layout__content {
+      margin-left: 18em;
+    }
+  
+    /* Sidebar */
+    .s-sidebar__trigger {
+      display: none;
+    }
+  
+    .s-sidebar__nav {
+      width: 18em;
+    }
+  
+    .s-sidebar__nav ul {
+      top: 1.3em;
+    }
+  }
+  </style>
+  
