@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="s-layout">
     <main class="s-layout__content">
-      <h1>Full View, Please!</h1>
+  <ParentTree></ParentTree>
     </main>
     <div class="s-layout__sidebar">
       <a class="s-sidebar__trigger" href="#0">
@@ -10,6 +10,9 @@
       <!-- actual side bar -->
       <nav class="s-sidebar__nav">
         <ul>
+          <li>
+            <!-- <ParentTree></ParentTree> -->
+          </li>
           <li>
             <MultiSelect
               v-model="filter_items.selectedUsers"
@@ -61,14 +64,14 @@
             />
           </li>
           <br />
-          <li>
+          <!-- <li>
             <MultiSelect
               v-model="filter_items.selectedIndustry"
               :options="filter_items.Industry"
               placeholder="Select a Industry"
             />
           </li>
-          <br />
+          <br /> -->
           <li>
             <MultiSelect
               v-model="filter_items.selectedPerpertyOwnership"
@@ -94,7 +97,7 @@
             />
           </li>
           <br />
-          <li>
+          <!-- <li>
             <h5>Grouped</h5>
             <MultiSelect
               v-model="filter_items.selectedGroupedProduct"
@@ -108,22 +111,22 @@
                 <div>{{ slotProps.option.label }}</div>
               </template>
             </MultiSelect>
+          </li> -->
+ 
+          <li>
+            <h4>Asset type of Equipment</h4>
+            <ChildTree></ChildTree >
           </li>
           <br />
           <li>
-            <h3>Asset type of Equipment</h3>
-            <Treeselect></Treeselect >
-          </li>
-          <br />
-          <li>
-            <h3>Asset Age: {{ filter_items.assetAge }} years</h3>
+            <h4>Asset Age: {{ filter_items.assetAge }} years</h4>
             <Slider v-model="filter_items.assetAge" />
           </li>
           <br />
           <li>
             <div class="p-fluid p-grid p-formgrid">
-              <div class="p-field p-col-12 p-md-4">
-                <div class="p-field p-col-12 p-md-4">
+              <div class="p-field p-col-12 p-md-12">
+                <div class="p-field p-col-12 p-md-12">
                   <label for="range">Range</label>
                   <Calendar
                     id="range"
@@ -145,11 +148,12 @@
 <script>
 import MultiSelect from "primevue/multiselect";
 // import TreeMultiSelect from "./components/TreeMultiSelect.vue";
-import  Treeselect from "./components/NewTree.vue"
+import  ChildTree from "./components/ChildTree.vue"
+import ParentTree from "./components/ParentTree.vue"
 
 export default {
   name: "App",
-  components: { MultiSelect,Treeselect },
+  components: { MultiSelect,ChildTree ,ParentTree},
   data() {
     return {
       filter_items: {

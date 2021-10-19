@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <treeselect v-model="value" 
-    :multiple="true" 
-    :options="options" />
+    <treeselect v-model="value" :multiple="true" :options="options"/>
   </div>
 </template>
 
@@ -12,14 +10,15 @@
   // import the styles
   import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
+  import json from '/Users/joannesun/Desktop/primevue-filter/Newlend.json'
+
   export default {
     // register the component
     components: { Treeselect },
     data() {
       return {
-        // define the default value
-        value: null,
-        // define options
+      myJson: json,
+      value: null,
         options: [ {
           id: 'a',
           label: 'a',
@@ -38,6 +37,6 @@
           label: 'c',
         } ],
       }
-    },
+    }
   }
 </script>
