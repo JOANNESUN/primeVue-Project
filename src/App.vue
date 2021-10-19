@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="s-layout">
     <main class="s-layout__content">
-  <ParentTree></ParentTree>
+  <!-- <ParentTree></ParentTree> -->
     </main>
     <div class="s-layout__sidebar">
       <a class="s-sidebar__trigger" href="#0">
@@ -115,7 +115,7 @@
  
           <li>
             <h4>Asset type of Equipment</h4>
-            <ChildTree></ChildTree >
+            <ChildTree :menuProp="menu"></ChildTree >
           </li>
           <br />
           <li>
@@ -149,13 +149,29 @@
 import MultiSelect from "primevue/multiselect";
 // import TreeMultiSelect from "./components/TreeMultiSelect.vue";
 import  ChildTree from "./components/ChildTree.vue"
-import ParentTree from "./components/ParentTree.vue"
+// import ParentTree from "./components/ParentTree.vue"
+
+import json from "/Users/joannesun/Desktop/primevue-filter/Newlend.json";
+
+function menu(id, label, children) {
+  this.id = id;
+  this.label = label;
+  this.children = children;
+}
+
 
 export default {
   name: "App",
-  components: { MultiSelect,ChildTree ,ParentTree},
+  components: { MultiSelect, ChildTree},
   data() {
     return {
+
+//tree-multiSelect 
+ myJson: json,
+ menu: [],
+
+//
+
       filter_items: {
         datesRange: null,
         date7: null,
@@ -264,6 +280,46 @@ export default {
     };
   },
   methods: {
+
+gethis() {
+  console.log("HIIII")
+      var p = this.myJson.filter_items.industries;
+      //console.log(p)
+      //console.log(p)
+      var industries = [];
+      for (var key of Object.keys(p)) {
+        industries.push(p[key]);
+        // for (var inside of key){
+        //      //console.log(inside);
+        // }
+      }
+
+      var multiselect = [];
+      for (var key in industries) {
+        var item = new menu();
+        var children = [];
+        for (var key2 in industries[key].children) {
+          children.push({
+            id: industries[key].children[key2].child+"-"+industries[key].parent.child,
+            label: industries[key].children[key2].child,
+          });
+        }
+        item.children = children;
+        for (var key2 in industries[key].parent) {
+          item.id = industries[key].parent.child;
+          item.label = industries[key].parent.child;
+          //console.log(industries[key].parent.child)
+        }
+        multiselect.push(item);
+      }
+
+      //console.log("VVVVVV");
+      //console.log(multiselect);
+      this.menu = multiselect;
+    },
+
+
+
     // onSelectAllChange(event) {
     //   this.selectedItems = event.checked
     //     ? this.items.map(item => item.value)
@@ -295,7 +351,9 @@ export default {
     invalidDate.setDate(today.getDate() - 1);
     this.invalidDates = [today, invalidDate];
   },
-  mounted() {}
+  mounted() {
+    this.gethis()
+  }
 };
 </script>
 
