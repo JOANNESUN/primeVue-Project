@@ -111,11 +111,8 @@
           </li>
           <br />
           <li>
-            <MultiSelect
-              v-model="filter_items.selectedEquipment"
-              :options="filter_items.AssetTypeEquipment"
-              placeholder="(G)Asset Type for Equipment"
-            />
+            <h3>Asset type of Equipment</h3>
+            <Treeselect></Treeselect >
           </li>
           <br />
           <li>
@@ -139,17 +136,6 @@
               </div>
             </div>
           </li>
-          <h4>group select</h4>
-          <li>
-            <Multigroupselect
-              v-model="filter_items.selectedGroupedCities"
-              :options="filter_items.groupedCities"
-              optionLabel="label"
-              optionGroupLabel="label"
-              optionGroupChildren="items"
-            >
-            </Multigroupselect>
-          </li>
         </ul>
       </nav>
     </div>
@@ -158,15 +144,17 @@
 
 <script>
 import MultiSelect from "primevue/multiselect";
-import Multigroupselect from "./multiGroupSelect";
+// import TreeMultiSelect from "./components/TreeMultiSelect.vue";
+import  Treeselect from "./components/NewTree.vue"
+
 export default {
-  components: { MultiSelect, Multigroupselect },
+  name: "App",
+  components: { MultiSelect,Treeselect },
   data() {
     return {
       filter_items: {
         datesRange: null,
         date7: null,
-
         assetAge: [0, 100],
 
         // selectedUsers: null,
@@ -302,7 +290,8 @@ export default {
     let invalidDate = new Date();
     invalidDate.setDate(today.getDate() - 1);
     this.invalidDates = [today, invalidDate];
-  }
+  },
+  mounted() {}
 };
 </script>
 
@@ -323,11 +312,10 @@ h3 {
   width: 18rem;
 }
 
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item{
-  top:13px;
-  background:white;
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item {
+  top: 13px;
+  background: white;
 }
-
 
 /* Primary Styles */
 *,

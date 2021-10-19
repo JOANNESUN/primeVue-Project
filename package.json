@@ -10,7 +10,9 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@riophae/vue-treeselect": "^0.4.0",
     "ajv": "^6.12.6",
+    "liquor-tree": "^0.2.70",
     "primeicons": "^4.1.0",
     "primevue": "^2.6.0",
     "vue": "^2.5.2"

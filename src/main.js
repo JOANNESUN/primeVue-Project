@@ -8,7 +8,7 @@ import RadioButton from 'primevue/radiobutton';
 import Slider from 'primevue/slider';
 import Calendar from 'primevue/calendar';
 import Tree from 'primevue/tree';
-import  Multigroupselect from './multiGroupSelect';
+
 
 
 
@@ -20,17 +20,12 @@ import 'primeicons/primeicons.css'
 
 
 
-
 Vue.config.productionTip = false
 
 
 /* eslint-disable no-new */
 Vue.use(PrimeVue);
 
-// Vue.component('MultiSelect', MultiSelect);
-//global  
-
-Vue.component('Multigroupselect', Multigroupselect)
 
 Vue.component('Tree',Tree)
 
