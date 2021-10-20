@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="childTree">
     <treeselect v-model="value" :multiple="true" :options="options" />
   </div>
 </template>
@@ -10,12 +10,12 @@ import Treeselect from "@riophae/vue-treeselect";
 // import the styles
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
-import json from "/Users/joannesun/Desktop/primevue-filter/Newlend.json";
+//import json from "/Users/joannesun/Desktop/primevue-filter/Newlend.json";
 
 export default {
   // register the component
   components: { Treeselect },
-  
+  name: 'ChildTree',
   data() {
     return {
       // myJson: json,

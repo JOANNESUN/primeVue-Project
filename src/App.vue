@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="s-layout">
     <main class="s-layout__content">
-      <ParentTree></ParentTree>
+      <!-- <ParentTree></ParentTree> -->
     </main>
     <div class="s-layout__sidebar">
       <a class="s-sidebar__trigger" href="#0">
@@ -16,6 +16,7 @@
           <li>
             <MultiSelect
               v-model="filter_items.selectedUsers"
+              v-show="filter_items.partner_users"
               :options="filter_items.partner_users"
               optionLabel="name"
               placeholder="Select a user"
@@ -118,10 +119,10 @@
             <ChildTree :menuProp="menu"></ChildTree>
           </li>
           <br />
-          <!-- <li>
+          <li>
             <h4>Product and Sub Product Type</h4>
             <ProductTree :menuProductProp="menuProduct"></ProductTree>
-          </li> -->
+          </li>
           <li>
             <h4>Asset Age: {{ filter_items.assetAge }} years</h4>
             <Slider v-model="filter_items.assetAge" />
@@ -129,9 +130,9 @@
           <br />
           <br />
           <li>
-            <div class="p-fluid p-grid p-formgrid">
-              <div class="p-field p-col-12 p-md-12">
-                <div class="p-field p-col-12 p-md-12">
+            <div class="p-fluid p-grid p-formgrid" >
+              <div class="p-field p-col-12 p-md-12" >
+                <div class="p-field p-col-12 p-md-12" >
                   <label for="range" style="margin-left: 1em">Date Range</label>
                   <Calendar
                     id="range"
@@ -154,9 +155,9 @@
 import MultiSelect from "primevue/multiselect";
 // import TreeMultiSelect from "./components/TreeMultiSelect.vue";
 import ChildTree from "./components/ChildTree.vue";
-import ParentTree from "./components/ParentTree.vue";
+//import ParentTree from "./components/ParentTree.vue";
 
-// import ProductTree from "./components/ProductTree.vue";
+import ProductTree from "./components/ProductTree.vue";
 
 import json from "/Users/joannesun/Desktop/primevue-filter/Newlend.json";
 //equipment multi-select
@@ -166,19 +167,20 @@ function menu(id, label, children) {
   this.children = children;
 };
 //product multi-select
-// function menuProduct(id, label) {
-//   this.id = id;
-//   this.label = label;
-// };
+function menuProduct(id, label, children) {
+  this.id = id;
+  this.label = label;
+  this.children = children;
+}
 export default {
   name: "App",
-  components: { MultiSelect, ChildTree, ParentTree },
+  components: { MultiSelect, ChildTree, ProductTree },
   data() {
     return {
       //tree-multiSelect
       myJson: json,
       menu: [],
-
+      menuProduct: [],
       //
 
       filter_items: {
@@ -329,38 +331,42 @@ export default {
       this.menu = multiselect;
     },
 
-    getProductType() {
+   getProductType() {
       var pro = this.myJson.filter_items.product_types;
 
       // get product object
       var productTypes = [];
-      for (var key5 of Object.keys(pro)) {
-        // console.log(pro[key]);
-        // console.log('hi' +pro[0]);
-        productTypes.push(pro[key]);
+      for (var key2 of Object.keys(pro)) {
+        //  console.log(pro[key]);
+        // console.log('hi');
+        productTypes.push(pro[key2]);
       }
 
-      // get data to align with multiselect formate
+      // get data to align with multiselect format
       var multiselectProduct = [];
-      for (var key1 in productTypes) {
+
+      for (var key in productTypes) {
         var item = new menuProduct();
-        var subProduct = [];
+        var children = [];
+
         for (var key2 in productTypes[key].sub_products) {
-          //  console.log(productTypes[key].sub_products[key2].product_type_name);
-          subProduct.push({
-            id: productTypes[key].sub_products[key2].product_type_name + "-" + productTypes[key].product_type_name,
+          // console.log('hi');
+          //console.log(productTypes[key].sub_products[key2].product_type_name);
+          children.push({
+            id: productTypes[key].sub_products[key2].product_type_name,
             label: productTypes[key].sub_products[key2].product_type_name,
           });
         }
-        item.subProduct = subProduct;
-        //console.log( item.subProduct);
-        for (var key3 in productTypes) {
-          // console.log(productTypes[key].product_type_name);
+        //console.log(children);
+        item.children = children;
+        //console.log(subProduct);
+        for (var key3 in productTypes[key]) {
+          //console.log(productTypes[key]);
           item.id = productTypes[key].product_type_name;
           item.label = productTypes[key].product_type_name;
         }
         multiselectProduct.push(item);
-        // console.log(multiselectProduct);
+        //console.log(multiselectProduct);
       }
       this.menuProduct = multiselectProduct;
       console.log(this.menuProduct);
@@ -398,13 +404,16 @@ export default {
     this.invalidDates = [today, invalidDate];
   },
   mounted() {
+    this.getProductType(),
     this.gethis()
-    //  this.getProductType();
+    
   },
 };
 </script>
 
 <style>
+
+
 h4 {
   margin-left: 1em;
 }

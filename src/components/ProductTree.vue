@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="productTree">
     <treeselect v-model="value" :multiple="true" :options="options" />
   </div>
 </template>
@@ -13,7 +13,7 @@ import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 export default {
   // register the component
   components: { Treeselect },
-  
+   name:"ProductTRee",
   data() {
     return {
       // myJson: json,
