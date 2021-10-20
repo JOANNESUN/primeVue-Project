@@ -10,8 +10,6 @@ import Treeselect from "@riophae/vue-treeselect";
 // import the styles
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
-import json from "/Users/joannesun/Desktop/primevue-filter/Newlend.json";
-
 export default {
   // register the component
   components: { Treeselect },
@@ -20,10 +18,10 @@ export default {
     return {
       // myJson: json,
       value: null,
-      options: this.$props.menuProp,
+      options: this.$props.menuProductProp,
     };
   },
-  props: ["menuProp"],
+  props: ["menuProductProp"],
   methods:{
     render(){
       
@@ -32,7 +30,7 @@ export default {
   async mounted() {
     await this.render();
     
-    this.options = this.$props.menuProp
+    this.options = this.$props.menuProductProp
 
     console.log(this.options)
     

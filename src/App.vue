@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="s-layout">
     <main class="s-layout__content">
-  <!-- <ParentTree></ParentTree> -->
+      <ParentTree></ParentTree>
     </main>
     <div class="s-layout__sidebar">
       <a class="s-sidebar__trigger" href="#0">
@@ -112,22 +112,27 @@
               </template>
             </MultiSelect>
           </li> -->
- 
+
           <li>
             <h4>Asset type of Equipment</h4>
-            <ChildTree :menuProp="menu"></ChildTree >
+            <ChildTree :menuProp="menu"></ChildTree>
           </li>
           <br />
+          <!-- <li>
+            <h4>Product and Sub Product Type</h4>
+            <ProductTree :menuProductProp="menuProduct"></ProductTree>
+          </li> -->
           <li>
             <h4>Asset Age: {{ filter_items.assetAge }} years</h4>
             <Slider v-model="filter_items.assetAge" />
           </li>
           <br />
+          <br />
           <li>
             <div class="p-fluid p-grid p-formgrid">
               <div class="p-field p-col-12 p-md-12">
                 <div class="p-field p-col-12 p-md-12">
-                  <label for="range">Range</label>
+                  <label for="range" style="margin-left: 1em">Date Range</label>
                   <Calendar
                     id="range"
                     v-model="filter_items.datesRange"
@@ -148,29 +153,33 @@
 <script>
 import MultiSelect from "primevue/multiselect";
 // import TreeMultiSelect from "./components/TreeMultiSelect.vue";
-import  ChildTree from "./components/ChildTree.vue"
-// import ParentTree from "./components/ParentTree.vue"
+import ChildTree from "./components/ChildTree.vue";
+import ParentTree from "./components/ParentTree.vue";
+
+// import ProductTree from "./components/ProductTree.vue";
 
 import json from "/Users/joannesun/Desktop/primevue-filter/Newlend.json";
-
+//equipment multi-select
 function menu(id, label, children) {
   this.id = id;
   this.label = label;
   this.children = children;
-}
-
-
+};
+//product multi-select
+// function menuProduct(id, label) {
+//   this.id = id;
+//   this.label = label;
+// };
 export default {
   name: "App",
-  components: { MultiSelect, ChildTree},
+  components: { MultiSelect, ChildTree, ParentTree },
   data() {
     return {
+      //tree-multiSelect
+      myJson: json,
+      menu: [],
 
-//tree-multiSelect 
- myJson: json,
- menu: [],
-
-//
+      //
 
       filter_items: {
         datesRange: null,
@@ -184,7 +193,7 @@ export default {
           { partner_user_id: 814, name: "Nick Bluhdorn" },
           { partner_user_id: 859, name: "Erin Bluhdorn" },
           { partner_user_id: 923, name: "Eric Leao" },
-          { partner_user_id: 961, name: "David Crook" }
+          { partner_user_id: 961, name: "David Crook" },
         ],
 
         //contract type
@@ -203,7 +212,7 @@ export default {
           "BFJan",
           "projv19",
           "projv20",
-          "projv21"
+          "projv21",
         ],
         //Lender
         selectedLender: null,
@@ -227,7 +236,7 @@ export default {
           { lender_id: 25, lender_name: "FinanceOne" },
           { lender_id: 26, lender_name: "ScotPac" },
           { lender_id: 27, lender_name: "InvoiceMoney" },
-          { lender_id: 33, lender_name: "Banjo" }
+          { lender_id: 33, lender_name: "Banjo" },
         ],
         //Status
         selectedStatus: null,
@@ -243,7 +252,7 @@ export default {
           "Movie, Film & Video Services",
           "Parks & Gardens",
           "Photographic Services",
-          "Radio & TV Services"
+          "Radio & TV Services",
         ],
         //property ownership
         selectedPerpertyOwnership: null,
@@ -258,7 +267,7 @@ export default {
           "Agriculture Header",
           "Aircraft",
           "Articulated Truck > 12T / Prime Mover",
-          "Asset Refurbishment"
+          "Asset Refurbishment",
         ],
 
         //loan purpose
@@ -274,15 +283,14 @@ export default {
           { purpose_id: 8, purpose_name: "Other" },
           { purpose_id: 9, purpose_name: "To Start a New Business" },
           { purpose_id: 10, purpose_name: "Purchase Existing Business" },
-          { purpose_id: 11, purpose_name: "Expansion" }
-        ]
-      }
+          { purpose_id: 11, purpose_name: "Expansion" },
+        ],
+      },
     };
   },
   methods: {
-
-gethis() {
-  console.log("HIIII")
+    gethis() {
+      console.log("HIIII");
       var p = this.myJson.filter_items.industries;
       //console.log(p)
       //console.log(p)
@@ -300,7 +308,10 @@ gethis() {
         var children = [];
         for (var key2 in industries[key].children) {
           children.push({
-            id: industries[key].children[key2].child+"-"+industries[key].parent.child,
+            id:
+              industries[key].children[key2].child +
+              "-" +
+              industries[key].parent.child,
             label: industries[key].children[key2].child,
           });
         }
@@ -318,7 +329,42 @@ gethis() {
       this.menu = multiselect;
     },
 
+    getProductType() {
+      var pro = this.myJson.filter_items.product_types;
 
+      // get product object
+      var productTypes = [];
+      for (var key5 of Object.keys(pro)) {
+        // console.log(pro[key]);
+        // console.log('hi' +pro[0]);
+        productTypes.push(pro[key]);
+      }
+
+      // get data to align with multiselect formate
+      var multiselectProduct = [];
+      for (var key1 in productTypes) {
+        var item = new menuProduct();
+        var subProduct = [];
+        for (var key2 in productTypes[key].sub_products) {
+          //  console.log(productTypes[key].sub_products[key2].product_type_name);
+          subProduct.push({
+            id: productTypes[key].sub_products[key2].product_type_name + "-" + productTypes[key].product_type_name,
+            label: productTypes[key].sub_products[key2].product_type_name,
+          });
+        }
+        item.subProduct = subProduct;
+        //console.log( item.subProduct);
+        for (var key3 in productTypes) {
+          // console.log(productTypes[key].product_type_name);
+          item.id = productTypes[key].product_type_name;
+          item.label = productTypes[key].product_type_name;
+        }
+        multiselectProduct.push(item);
+        // console.log(multiselectProduct);
+      }
+      this.menuProduct = multiselectProduct;
+      console.log(this.menuProduct);
+    },
 
     // onSelectAllChange(event) {
     //   this.selectedItems = event.checked
@@ -328,7 +374,7 @@ gethis() {
     // },
     onChange(event) {
       this.selectAll = event.value.length === this.items.length;
-    }
+    },
   },
   created() {
     //this.selectedCategory = this.categories[1];
@@ -353,11 +399,16 @@ gethis() {
   },
   mounted() {
     this.gethis()
-  }
+    //  this.getProductType();
+  },
 };
 </script>
 
 <style>
+h4 {
+  margin-left: 1em;
+}
+
 h3 {
   margin-inline-start: 0.5em;
 }
