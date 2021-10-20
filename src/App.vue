@@ -413,9 +413,28 @@ export default {
 
 <style>
 
+.p-multiselect.p-multiselect-label{
+padding: 0.9rem !important;
+color: #474747;
+}
+
+.vue-treeselect__control{
+  width:18rem;
+}
+
+.p-multiselect.p-component.p-inputwrapper{
+
+  border: none
+
+}
+.p-multiselect .p-multiselect-label.p-placeholder{
+  color:#474747;
+}
 
 h4 {
-  margin-left: 1em;
+  margin-left: 1.2em;
+  margin-right:-3em;
+  color:#474747;
 }
 
 h3 {
@@ -427,11 +446,11 @@ h3 {
 }
 
 .p-slider {
-  background: black;
+  background: #474747;
 }
 
 .p-multiselect {
-  width: 18rem;
+  width: 20rem;
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
@@ -448,7 +467,7 @@ h3 {
 }
 
 body {
-  font-family: sans-serif;
+  font-family: Tahoma;
   font-size: 1em;
   color: #333;
 }
@@ -502,13 +521,13 @@ a {
 .s-sidebar__nav {
   position: fixed;
   top: 0;
-  left: -18em;
+  left: -20em;
   overflow: hidden;
   transition: all 0.3s ease-in;
-  width: 18em;
+  width: 20em;
   height: 100%;
-  background: #e6e6e6;
-  color: rgba(19, 18, 18, 0.7);
+  background-color: #b6c0fa;
+  box-shadow: 3px 0px 4px 1px rgba(0, 0, 0, 0.1);
 }
 
 .s-sidebar__nav:hover,
@@ -542,20 +561,20 @@ a {
   .s-sidebar__nav:focus,
   .s-sidebar__trigger:hover + .s-sidebar__nav,
   .s-sidebar__trigger:focus + .s-sidebar__nav {
-    width: 18em;
+    width: 20em;
   }
 }
 
 @media (min-width: 48em) {
   .s-layout__content {
-    margin-left: 18em;
+    margin-left: 20em;
   }
   /* Sidebar */
   .s-sidebar__trigger {
     display: none;
   }
   .s-sidebar__nav {
-    width: 18em;
+    width: 20em;
   }
   .s-sidebar__nav ul {
     top: 1.3em;
